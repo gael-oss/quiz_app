@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block title %}Quiz disponibles{% endblock %}
+{% block content %}
+<h2>Quiz disponibles</h2>
+<ul style="margin-top:1.5rem;">
+  {% for q in quizzes %}
+    <li>
+      <strong>{{ q.titre }}</strong> (classe : {{ q.classe.nom }})
+      – <a href="{% url 'quiz:quiz_take' q.pk %}">Passer le quiz</a>
+    </li>
+  {% empty %}
+    <li>Aucun quiz disponible.</li>
+  {% endfor %}
+</ul>
+<a href="{% url 'quiz:student_session_list' %}">Voir mon historique de sessions →</a>
+{% endblock %}

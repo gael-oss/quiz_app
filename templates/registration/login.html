@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Connexion{% endblock %}
+
+{% block content %}
+<div class="wrapper" style="max-width: 480px;">
+  <h1>Connexion</h1>
+  <form method="post" action="{% url 'login' %}">
+    {% csrf_token %}
+
+    <div class="input-box">
+      <input
+        type="text"
+        name="{{ form.username.html_name }}"
+        id="{{ form.username.id_for_label }}"
+        placeholder="Nom d’utilisateur"
+        value="{{ form.username.value|default_if_none:'' }}"
+      >
+      {% if form.username.errors %}
+        <div class="error" style="margin-top:4px;">{{ form.username.errors.0 }}</div>
+      {% endif %}
+    </div>
+
+    <div class="input-box">
+      <input
+        type="password"
+        name="{{ form.password.html_name }}"
+        id="{{ form.password.id_for_label }}"
+        placeholder="Mot de passe"
+      >
+      {% if form.password.errors %}
+        <div class="error" style="margin-top:4px;">{{ form.password.errors.0 }}</div>
+      {% endif %}
+    </div>
+
+    {% if form.remember_me %}
+      <div class="remember-forgot" style="justify-content:flex-start;">
+        <label>
+          {{ form.remember_me }} Se souvenir de moi
+        </label>
+      </div>
+    {% endif %}
+
+    <div class="form-footer" style="display:flex; justify-content:space-between; align-items:center; margin-top:20px;">
+      <button type="submit" class="btn" style="width:auto; padding:0 30px;">
+        Se connecter
+      </button>
+      <a href="{% url 'password_reset' %}" style="font-size:0.9rem; color:#fff;">
+        Mot de passe oublié ?
+      </a>
+    </div>
+
+    <p class="register-link" style="margin-top:25px;">
+      Pas de compte ? <a href="{% url 'quiz:register' %}">Inscrivez-vous</a>
+    </p>
+  </form>
+</div>
+{% endblock %}

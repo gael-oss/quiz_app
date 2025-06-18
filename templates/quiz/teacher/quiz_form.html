@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Nouveau quiz{% endblock %}
+
+{% block content %}
+  <section class="wrapper" style="text-align:center;">
+    <h2>Créer un quiz</h2>
+
+    <form method="post" style="margin-top:20px;">
+      {% csrf_token %}
+      {{ form.non_field_errors }}
+      <div class="input-box">{{ form.titre }}</div>
+      <div class="input-box">{{ form.description }}</div>
+      <div class="input-box">{{ form.classe }}</div>
+      <button type="submit" class="btn">Enregistrer</button>
+    </form>
+
+    <p style="margin-top:16px;">
+      <a href="{% url 'quiz:quiz_list' %}">&larr; Retour à la liste</a>
+    </p>
+  </section>
+{% endblock %}

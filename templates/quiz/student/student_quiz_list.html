@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Quizzes{% endblock %}
+
+{% block content %}
+  <section class="wrapper" style="text-align:center;">
+
+    <h2>Quizzes</h2>
+
+    {% if quizzes %}
+      <ul style="list-style:none; padding-left:0; margin-top:20px; display:flex; flex-direction:column; gap:12px;">
+        {% for q in quizzes %}
+          <li>
+            <a class="btn" href="{% url 'quiz:quiz_take' q.pk %}">
+              {{ q.titre }} — {{ q.classe.nom }}
+            </a>
+          </li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p>Aucun quiz disponible.</p>
+    {% endif %}
+
+  </section>
+{% endblock %}

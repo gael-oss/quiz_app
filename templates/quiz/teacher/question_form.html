@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="wrapper" style="max-width:640px;">
+  <h2>{% if q_form.instance.pk %}Modifier{% else %}Nouvelle{% endif %} question – {{ quiz.titre }}</h2>
+
+  <form method="post">
+    {% csrf_token %}
+
+    {# ---------- Champ texte de la question ---------- #}
+    <div class="input-box" style="height:auto">
+      {{ q_form.texte.label_tag }}
+      {{ q_form.texte.errors }}
+      {{ q_form.texte }}            {# textarea #}
+    </div>
+
+    <hr style="margin:25px 0;border:none;border-top:1px solid rgba(255,255,255,.3)">
+
+    {# ---------- Formset des choix ---------- #}
+    {{ c_formset.management_form }}
+    <h3>Choix possibles</h3>
+
+    {% for form in c_formset %}
+      <div class="input-box" style="display:flex;height:auto;align-items:center;gap:12px">
+        {{ form.texte.errors }} {{ form.texte }}
+        {{ form.is_correct }} <small>Correct ?</small>
+        {% if form.instance.pk %}{{ form.DELETE }} Supprimer{% endif %}
+      </div>
+    {% endfor %}
+
+    <button class="btn" type="submit">Enregistrer</button>
+    <a href="{% url 'quiz:question_list' quiz_pk=quiz.id %}">← Retour</a>
+  </form>
+</div>
+{% endblock %}

@@ -1,0 +1,24 @@
+{# templates/partials/nav.html #}
+{% load static %}
+
+<div class="navbar">
+  <a href="{% url 'home' %}" class="brand">Quiz App</a>
+  <ul class="nav-links">
+    {% if user.is_authenticated %}
+      {% if is_teacher %}
+        <li><a href="{% url 'quiz:teacher_dashboard' %}">Dashboard Enseignant</a></li>
+      {% elif is_student %}
+        <li><a href="{% url 'quiz:student_dashboard' %}">Dashboard Étudiant</a></li>
+      {% endif %}
+      <li>
+        <form action="{% url 'logout' %}" method="post" class="inline">
+          {% csrf_token %}
+          <button type="submit">Déconnexion</button>
+        </form>
+      </li>
+    {% else %}
+      <li><a href="{% url 'login' %}">Connexion</a></li>
+      <li><a href="{% url 'quiz:register' %}">Inscription</a></li>
+    {% endif %}
+  </ul>
+</div>

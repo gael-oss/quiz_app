@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Dashboard Étudiant{% endblock %}
+
+{% block content %}
+  <section class="wrapper" style="text-align:center;">
+    <h2>Dashboard Étudiant</h2>
+    <p>Ici, vous pouvez accéder à vos quiz&nbsp;:</p>
+
+    <ul style="list-style:none; margin-top:20px; padding-left:0; display:flex; flex-direction:column; gap:12px;">
+      <li>
+        <a class="btn" href="{% url 'quiz:student_quiz_list' %}">Voir la liste des quiz</a>
+      </li>
+      <li>
+        <a class="btn" href="{% url 'quiz:student_session_list' %}">Voir votre historique de sessions</a>
+      </li>
+    </ul>
+  </section>
+{% endblock %}

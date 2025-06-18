@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block title %}Passer : {{ quiz.titre }}{% endblock %}
+{% block content %}
+<h2>Quiz : {{ quiz.titre }}</h2>
+<p>{{ quiz.description }}</p>
+<form method="post">
+  {% csrf_token %}
+  {% for question in quiz.questions.all %}
+    <fieldset style="margin-top:1.5rem;">
+      <legend><strong>Q{{ forloop.counter }}.</strong> {{ question.texte }}</legend>
+      {% for choice in question.choices.all %}
+        <div>
+          <label>
+            <input type="radio" name="question_{{ question.pk }}" value="{{ choice.pk }}">
+            {{ choice.texte }}
+          </label>
+        </div>
+      {% endfor %}
+    </fieldset>
+  {% endfor %}
+  <button class="btn" type="submit" style="margin-top:2rem;">Soumettre</button>
+</form>
+<a href="{% url 'quiz:student_quiz_list' %}">← Retour aux quiz disponibles</a>
+{% endblock %}

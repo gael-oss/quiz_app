@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% block title %}{{ object|default:"Nouvelle" }} classe{% endblock %}
+
+{% block content %}
+<section class="wrapper" style="max-width: 1000px; width: 95%; margin: 60px auto; text-align: center; padding: 50px 80px;">
+  <h2 style="margin-bottom: 2.5rem; font-size: 2rem;">
+    {{ object|default:"Créer une" }} classe
+  </h2>
+  <form method="post" style="display: flex; flex-direction: column; gap: 2rem;">
+    {% csrf_token %}
+
+    <!-- Nom -->
+    <div class="input-box" style="width: 100%;">
+      {{ form.nom.label_tag }}
+      {{ form.nom }}
+    </div>
+
+    <!-- Étudiants -->
+    <div class="input-box" style="width: 100%;">
+      <label for="{{ form.etudiants.id_for_label }}" style="display: block; margin-bottom: 0.75rem; font-weight: 500; font-size: 1rem;">
+        Étudiants (Ctrl/Cmd-clic pour multi-sélection)
+      </label>
+      {{ form.etudiants }}
+    </div>
+
+    <!-- Bouton Enregistrer -->
+    <div style="display: flex; justify-content: center; margin-top: 2.5rem;">
+      <button type="submit" class="btn" style="min-width: 200px; padding: 1rem 2rem; font-size: 1.1rem;">
+        Enregistrer
+      </button>
+    </div>
+  </form>
+
+  <!-- Lien de retour -->
+  <p style="margin-top: 2.5rem;">
+    <a href="{% url 'quiz:class_list' %}" class="link-back" style="font-size: 1rem;">
+      &larr; Retour à la liste
+    </a>
+  </p>
+</section>
+{% endblock %}

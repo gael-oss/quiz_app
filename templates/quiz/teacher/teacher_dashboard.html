@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% load json_script %}
+
+{% block title %}Dashboard Enseignant{% endblock %}
+
+{% block extra_head %}
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+{% endblock %}
+
+{% block content %}
+<div class="wrapper" style="max-width: 800px; margin: 2rem auto; padding: 2rem;">
+  <h2 style="text-align: center; margin-bottom: 1.5rem;">Dashboard Enseignant</h2>
+
+  <!-- Scripts JSON cachés pour Chart.js -->
+  {{ labels|json_script:"lbls" }}
+  {{ avg_scores|json_script:"avg" }}
+
+  <div class="chart-container" style="position: relative; height: 350px;">
+    <canvas id="avgScoresChart"></canvas>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const labels = JSON.parse(document.getElementById('lbls').textContent);
+    const data = JSON.parse(document.getElementById('avg').textContent);
+
+    const ctx = document.getElementById('avgScoresChart').getContext('2d');
+    new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels,
+        datasets: [{
+          label: 'Moyenne (%)',
+          data,
+          borderRadius: 4,
+          barThickness: 'flex'
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+          y: { beginAtZero: true, ticks: { stepSize: 10 } }
+        }
+      }
+    });
+  });
+</script>
+{% endblock %}

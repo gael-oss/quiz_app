@@ -1,0 +1,46 @@
+[
+  {
+    "model": "quiz.classe",
+    "pk": 1,
+    "fields": {
+      "nom": "Classe Exemple",
+      "enseignant": 1
+    }
+  },
+  {
+    "model": "quiz.quiz",
+    "pk": 1,
+    "fields": {
+      "titre": "Quiz de démonstration",
+      "description": "Un quiz prérempli pour voir le fonctionnement",
+      "classe": 1,
+      "enseignant": 1
+    }
+  },
+  {
+    "model": "quiz.question",
+    "pk": 1,
+    "fields": {
+      "texte": "Quelle est la capitale de la France ?",
+      "quiz": 1
+    }
+  },
+  {
+    "model": "quiz.choice",
+    "pk": 1,
+    "fields": {
+      "texte": "Paris",
+      "is_correct": true,
+      "question": 1
+    }
+  },
+  {
+    "model": "quiz.choice",
+    "pk": 2,
+    "fields": {
+      "texte": "Lyon",
+      "is_correct": false,
+      "question": 1
+    }
+  }
+]

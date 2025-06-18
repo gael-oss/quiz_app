@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block title %}Résultat : {{ session.quiz.titre }}{% endblock %}
+{% block content %}
+<h2>Résultat du quiz : {{ session.quiz.titre }}</h2>
+<p>Score : {{ session.score|floatformat:2 }} %</p>
+<ul style="margin-top:1.5rem;">
+  {% for question in session.quiz.questions.all %}
+    <li>
+      <strong>{{ question.texte }}</strong><br>
+      Votre réponse :
+      {% with sel=session.quiz_sessions.get(etudiant=request.user) %}
+      {% endwith %}
+      {% comment %}
+        Ici on ne re-stocke pas la réponse individuelle ; 
+        pour conserver, il faudrait un modèle Answer. À affiner plus tard.
+      {% endcomment %}
+      <!-- On se contente d’indiquer la bonne réponse -->
+      Bonne réponse :
+      {% for choice in question.choices.all %}
+        {% if choice.is_correct %}{{ choice.texte }}{% endif %}
+      {% endfor %}
+    </li>
+  {% endfor %}
+</ul>
+<a href="{% url 'quiz:student_session_list' %}">← Voir l’historique</a>
+{% endblock %}

@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}{{ view.object|default_if_none:"Créer un quiz" }}{% endblock %}
+
+{% block content %}
+<div class="wrapper">
+  <h2>{{ view.object|yesno:"Modifier un quiz,Créer un quiz" }}</h2>
+
+  <form method="post" novalidate>
+    {% csrf_token %}
+
+    {# ─────────── Titre ─────────── #}
+    <div class="input-box">
+      {{ form.titre }}
+      {% if form.titre.errors %}
+        <small class="text-red-500">{{ form.titre.errors.0 }}</small>
+      {% endif %}
+    </div>
+
+    {# ─────────── Description (textarea) ─────────── #}
+    <div class="input-box">
+      {{ form.description }}
+      {% if form.description.errors %}
+        <small class="text-red-500">{{ form.description.errors.0 }}</small>
+      {% endif %}
+    </div>
+
+    {# ─────────── Classe ─────────── #}
+    <div class="input-box">
+      {{ form.classe }}
+      {% if form.classe.errors %}
+        <small class="text-red-500">{{ form.classe.errors.0 }}</small>
+      {% endif %}
+    </div>
+
+    {# ─────────── Bouton GÉRER LES QUESTIONS ─────────── #}
+    {% if view.object %}
+      <div class="flex justify-center my-4">
+        <a href="{% url 'quiz:question_list' view.object.pk %}"
+           class="btn bg-indigo-600 hover:bg-indigo-700 text-white w-auto px-6">
+          ➕&nbsp;Gérer les questions
+        </a>
+      </div>
+    {% endif %}
+
+    {# ─────────── Enregistrer ─────────── #}
+    <button type="submit" class="btn">Enregistrer</button>
+
+    <p class="text-center mt-4">
+      <a href="{% url 'quiz:quiz_list' %}" class="underline">← Retour à la liste</a>
+    </p>
+  </form>
+</div>
+{% endblock %}

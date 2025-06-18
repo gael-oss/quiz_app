@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block title %}Supprimer la classe « {{ object.nom }} »{% endblock %}
+
+{% block content %}
+<section class="wrapper" style="max-width:600px; margin:2rem auto; text-align:center;">
+  <h2>Supprimer la classe « {{ object.nom }} » ?</h2>
+  <p style="margin:1.5rem 0;">Cette action est irréversible.</p>
+  <form method="post" style="display:inline-block; margin-right:1rem;">
+    {% csrf_token %}
+    <button type="submit" class="btn" style="background:#e53e3e; color:#fff; padding:0.75rem 1.5rem;">
+      Supprimer
+    </button>
+  </form>
+  <a href="{% url 'quiz:class_list' %}" class="btn" style="background:#edf2f7; color:#333; padding:0.75rem 1.5rem;">
+    Annuler
+  </a>
+</section>
+{% endblock %}

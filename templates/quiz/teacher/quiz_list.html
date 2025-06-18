@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block title %}Mes quiz{% endblock %}
+
+{% block content %}
+<div class="mx-auto" style="max-width:960px; margin:2rem auto; border-radius:12px; padding:2.5rem 2rem; box-shadow:0 4px 20px rgba(0,0,0,0.1);">
+  <!-- Titre -->
+  <h1 style="font-size:2rem; font-weight:600; text-align:center; margin-bottom:2rem;">Mes quizzes</h1>
+
+  <!-- Bouton création centré -->
+  <div style="text-align:center; margin-bottom:2.5rem;">
+    <a href="{% url 'quiz:quiz_create' %}"
+       class="btn"
+       style="display:inline-block; padding:.75rem 1.5rem; font-size:1rem; font-weight:600; border-radius:8px;">
+      ➕ Nouveau quiz
+    </a>
+  </div>
+
+  {% if quizzes %}
+    <div style="overflow-x:auto;">
+      <table style="width:100%; border-collapse:collapse;">
+        <thead>
+          <tr style="background:rgba(0,0,0,0.05);">
+            <th style="padding:.75rem 1rem; text-align:left;">Titre</th>
+            <th style="padding:.75rem 1rem; text-align:left;">Classe</th>
+            <th style="padding:.75rem 1rem; text-align:center;">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for q in quizzes %}
+          <tr style="border-top:1px solid rgba(0,0,0,0.1);">
+            <td style="padding:.75rem 1rem;">{{ q.titre }}</td>
+            <td style="padding:.75rem 1rem;">{{ q.classe.nom }}</td>
+            <td style="padding:.75rem 1rem; text-align:center;">
+              <a href="{% url 'quiz:question_list' quiz_pk=q.id %}"
+                 style="margin-right:1.5rem; display:inline-flex; align-items:center; gap:.25rem; font-size:.95rem;">
+                🗂️ Questions
+              </a>
+              <a href="{% url 'quiz:quiz_edit' pk=q.id %}"
+                 style="margin-right:1.5rem; display:inline-flex; align-items:center; gap:.25rem; font-size:.95rem;">
+                ✏️ Modifier
+              </a>
+              <a href="{% url 'quiz:quiz_delete' pk=q.id %}"
+                 style="display:inline-flex; align-items:center; gap:.25rem; font-size:.95rem; color:#e53e3e;"
+                 onclick="return confirm('Supprimer définitivement ce quiz ?');">
+                🗑️ Supprimer
+              </a>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  {% else %}
+    <p style="text-align:center; color:rgba(0,0,0,0.6); margin-top:2rem;">Aucun quiz pour l’instant.</p>
+  {% endif %}
+</div>
+{% endblock %}

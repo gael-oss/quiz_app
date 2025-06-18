@@ -1,0 +1,16 @@
+{% load static dict_extras %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Accès refusé</title>
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+  <main class="container" style="text-align:center;">
+    <h1>403 – Accès refusé</h1>
+    <p>Vous n'avez pas les droits pour accéder à cette page.</p>
+    <a class="btn" href="{% url 'quiz:home' %}">Retour à l'accueil</a>
+  </main>
+</body>
+</html>

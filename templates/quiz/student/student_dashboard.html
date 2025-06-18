@@ -1,0 +1,7 @@
+{% extends 'base.html' %}
+{% block title %}Dashboard Étudiant{% endblock %}
+{% block content %}
+  <h2>Bienvenue, {{ user.username }}</h2>
+  <p><a class="btn" href="{% url 'quiz:student_quiz_list' %}">Passer un quiz</a></p>
+  <p><a class="btn" href="{% url 'quiz:student_session_list' %}">Voir mes résultats</a></p>
+{% endblock %}

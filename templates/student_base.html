@@ -1,0 +1,50 @@
+{% load static dict_extras %}
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>{% block title %}Quiz App{% endblock %}</title>
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+  <script src="{% static 'js/toast.js' %}" defer></script>
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Aller au contenu</a>
+
+  <header role="banner">
+    <div style="display:flex; justify-content:space-between; align-items:center; padding:1rem; background:var(--white); box-shadow:0 2px 8px rgba(0,0,0,0.03);">
+      <span>Étudiant : {{ user.username }}</span>
+      <form method="post" action="{% url 'logout' %}" style="display:inline;" aria-label="Déconnexion">
+        {% csrf_token %}
+        <button type="submit" class="btn">Déconnexion</button>
+      </form>
+    </div>
+  </header>
+
+  <nav role="navigation" aria-label="Menu principal">
+    {% include 'partials/nav.html' %}
+  </nav>
+
+  <script id="messages-data" type="application/json">
+    {{ messages_data|json_script:"messages-data" }}
+  </script>
+
+  <main id="main-content" class="container" tabindex="-1">
+    {% block content %}{% endblock %}
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.250.0/dist/lucide.min.js"></script>
+  <script>lucide.replace()</script>
+ <!-- Tippy.js pour les tooltips -->
+  <script src="https://unpkg.com/@popperjs/core@2"></script>
+  <script src="https://unpkg.com/tippy.js@6"></script>
+  <link rel="stylesheet" href="https://unpkg.com/tippy.js@6/dist/tippy.css" />
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      tippy('[data-tippy-content]', { delay: [100, 50], maxWidth: 200 });
+    });
+  </script> 
+</body>
+</html>

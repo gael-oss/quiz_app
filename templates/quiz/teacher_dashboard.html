@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block title %}Dashboard&nbsp;Enseignant{% endblock %}
+
+{% block content %}
+  <section class="wrapper">
+    <h2>Tableau de bord Enseignant</h2>
+    <p>Gérez vos classes, vos quiz et consultez les résultats.</p>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:20px;">
+      <a class="btn" href="{% url 'quiz:class_list' %}">Gérer les classes</a>
+      <a class="btn" href="{% url 'quiz:quiz_list' %}">Gérer les quiz</a>
+      <a class="btn" href="{% url 'quiz:teacher_session_list' %}">Voir les sessions</a>
+      <a class="btn" href="{% url 'quiz:teacher_session_export' %}">Exporter le CSV</a>
+    </div>
+  </section>
+{% endblock %}

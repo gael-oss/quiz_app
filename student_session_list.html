@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block title %}Historique des sessions{% endblock %}
+{% block content %}
+<h2>Historique des sessions</h2>
+<table style="width:100%; margin-top:1rem; border-collapse:collapse;">
+  <thead>
+    <tr>
+      <th>Quiz</th>
+      <th>Date de début</th>
+      <th>Score (%)</th>
+      <th>Voir</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for s in sessions %}
+      <tr>
+        <td>{{ s.quiz.titre }}</td>
+        <td>{{ s.date_debut|date:"d/m/Y H:i" }}</td>
+        <td>{{ s.score|floatformat:2 }}</td>
+        <td><a href="{% url 'quiz:quiz_result' s.pk %}">Résultat</a></td>
+      </tr>
+    {% empty %}
+      <tr><td colspan="4">Aucune session enregistrée.</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+<a href="{% url 'quiz:student_quiz_list' %}">← Retour aux quiz</a>
+{% endblock %}

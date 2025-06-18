@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% block title %}Questions — {{ quiz.titre }}{% endblock %}
+
+{% block content %}
+<div class="mx-auto" style="max-width:960px; margin:2rem auto; padding:2rem; border-radius:12px; box-shadow:0 4px 20px rgba(0,0,0,0.1);">
+
+  <!-- Titre centré -->
+  <h2 style="font-size:1.75rem; font-weight:600; text-align:center; margin-bottom:1.5rem;">
+    Questions pour « {{ quiz.titre }} »
+  </h2>
+
+  <!-- Boutons d’action alignés au centre -->
+  <div style="display:flex; justify-content:center; gap:1.5rem; margin-bottom:2rem;">
+    <a href="{% url 'quiz:question_create' quiz_pk=quiz.pk %}"
+       class="btn"
+       style="padding:.75rem 1.5rem; font-weight:600;">
+      ➕ Nouvelle question
+    </a>
+    <a href="{% url 'quiz:quiz_list' %}"
+       style="align-self:center; font-size:.95rem; text-decoration:underline;">
+      ← Retour aux quizzes
+    </a>
+  </div>
+
+  <!-- Tableau des questions -->
+  <div style="overflow-x:auto;">
+    <table style="width:100%; border-collapse:collapse;">
+      <thead>
+        <tr style="background:rgba(0,0,0,0.05);">
+          <th style="padding:.75rem 1rem; text-align:left;">Question</th>
+          <th style="padding:.75rem 1rem; text-align:center;">Nb. choix</th>
+          <th style="padding:.75rem 1rem; text-align:center;">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for q in questions %}
+        <tr style="border-top:1px solid rgba(0,0,0,0.1);">
+          <td style="padding:.75rem 1rem;">{{ q.texte|truncatechars:80 }}</td>
+          <td style="padding:.75rem 1rem; text-align:center;">{{ q.choices.count }}</td>
+          <td style="padding:.75rem 1rem; text-align:center;">
+            <a href="{% url 'quiz:question_edit' q.pk %}"
+               style="margin-right:1rem; display:inline-flex; align-items:center; gap:.25rem; font-size:.95rem;">
+              ✏️ Modifier
+            </a>
+            <a href="{% url 'quiz:question_delete' q.pk %}"
+               style="display:inline-flex; align-items:center; gap:.25rem; font-size:.95rem; color:#e53e3e;"
+               onclick="return confirm('Supprimer définitivement cette question ?');">
+              🗑️ Supprimer
+            </a>
+          </td>
+        </tr>
+        {% empty %}
+        <tr>
+          <td colspan="3" style="padding:2rem; text-align:center; font-style:italic;">
+            Aucune question pour l’instant.
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+</div>
+{% endblock %}

@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Mes classes{% endblock %}
+
+{% block content %}
+  <section class="wrapper"
+           style="max-width: 1000px; width: 90%; margin: 80px auto 40px; padding: 40px;">
+
+    <!-- Titre centré -->
+    <h2 style="text-align: center; margin-bottom: 24px;">Mes classes</h2>
+
+    <!-- Bouton centré -->
+    <p style="text-align: center; margin-bottom: 24px;">
+      <a class="btn" href="{% url 'quiz:class_create' %}">
+        ➕ Ajouter une classe
+      </a>
+    </p>
+
+    {% if classes %}
+      <div style="overflow-x: auto;">
+        <table style="width: 100%; border-collapse: collapse;">
+          <thead>
+            <tr>
+              <th style="padding: 12px; text-align: left;">Nom</th>
+              <th style="padding: 12px; text-align: left;">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for c in classes %}
+              <tr style="border-top: 1px solid rgba(0,0,0,0.1);">
+                <td style="padding: 12px;">{{ c.nom }}</td>
+                <td style="padding: 12px;">
+                  <a href="{% url 'quiz:class_edit' c.pk %}" style="margin-right: 16px;">
+                    ✏️ Modifier
+                  </a>
+                  <a href="{% url 'quiz:class_delete' c.pk %}">
+                    🗑️ Supprimer
+                  </a>
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    {% else %}
+      <p style="text-align: center; margin-top: 24px;">
+        Aucune classe pour le moment.
+      </p>
+    {% endif %}
+
+  </section>
+{% endblock %}

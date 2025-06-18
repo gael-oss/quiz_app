@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% load tz %}
+
+{% block title %}Historique des sessions{% endblock %}
+
+{% block content %}
+<div class="wrapper" style="
+    width: 100%;
+    max-width: 1400px;
+    margin: 4rem auto;
+    padding: 4rem;
+    min-height: 75vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-radius: 12px;
+">
+  <h2 style="text-align:center; margin-bottom:2.5rem; font-size:2.25rem;">Historique de mes sessions</h2>
+
+  {% if sessions %}
+    <div class="table-container" style="overflow-x:auto; flex:1;">
+      <table class="sessions" style="
+          width: 100%;
+          border-collapse: collapse;
+          table-layout: fixed;
+      ">
+        <thead>
+          <tr>
+            <th style="padding:1.75rem; text-align:left; vertical-align:middle; width:30%;">Quiz</th>
+            <th style="padding:1.75rem; text-align:left; vertical-align:middle; width:25%;">Date début</th>
+            <th style="padding:1.75rem; text-align:left; vertical-align:middle; width:25%;">Date fin</th>
+            <th style="padding:1.75rem; text-align:left; vertical-align:middle; width:20%;">Score (%)</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for s in sessions %}
+          <tr style="border-top:1px solid rgba(0,0,0,0.1);">
+            <td style="padding:2rem; vertical-align:middle; overflow-wrap: anywhere;">{{ s.quiz.titre }}</td>
+            <td style="padding:2rem; vertical-align:middle;">{{ s.date_debut|localtime|date:"d/m/Y H:i" }}</td>
+            <td style="padding:2rem; vertical-align:middle;">
+              {% if s.date_fin %}
+                {{ s.date_fin|localtime|date:"d/m/Y H:i" }}
+              {% else %}
+                &mdash;
+              {% endif %}
+            </td>
+            <td style="padding:2rem; vertical-align:middle;">{{ s.score|floatformat:2 }}%</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  {% else %}
+    <p style="text-align:center; margin:3rem 0; flex:1; font-size:1.1rem;">Aucune session passée pour le moment.</p>
+  {% endif %}
+
+  <p style="text-align:center; margin-top:4rem;">
+    <a href="{% url 'quiz:student_quiz_list' %}"
+       class="btn"
+       style="
+         display:inline-block;
+         padding:1rem 2.5rem;
+         font-size:1.15rem;
+         border-radius:6px;
+         vertical-align:middle;
+       ">
+      ➔ Passer un nouveau quiz
+    </a>
+  </p>
+</div>
+{% endblock %}

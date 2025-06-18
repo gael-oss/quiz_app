@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Résultat du quiz</title>
+</head>
+<body>
+  <p>Bonjour {{ session.etudiant.username }},</p>
+
+  <p>Vous avez terminé le quiz "<strong>{{ quiz.titre }}</strong>".</p>
+  <ul>
+    <li>Date : {{ session.date_fin|date:"d/m/Y H:i" }}</li>
+    <li>Score : {{ session.score|floatformat:2 }} %</li>
+  </ul>
+
+  <p>Vous pouvez consulter le détail de vos réponses en vous connectant sur <a href="{{ site_url }}">Quiz App</a>.</p>
+
+  <p>Bon travail !</p>
+</body>
+</html>

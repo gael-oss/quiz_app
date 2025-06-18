@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block title %}Supprimer la question{% endblock %}
+
+{% block content %}
+<section class="wrapper text-center">
+  <h2 class="text-xl font-bold mb-4">Supprimer la question ?</h2>
+  <p class="mb-6 italic">{{ object.texte }}</p>
+
+  <form method="post" class="space-x-4">
+    {% csrf_token %}
+    <button type="submit" class="btn bg-red-600 text-white px-4 py-2 rounded">Oui, supprimer</button>
+    <a href="{% url 'quiz:question_list' object.quiz.pk %}" class="btn bg-gray-300 px-4 py-2 rounded">Annuler</a>
+  </form>
+</section>
+{% endblock %}

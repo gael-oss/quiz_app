@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block title %}Passer le quiz{% endblock %}
+{% block content %}
+  <h2>{{ quiz.titre }}</h2>
+  <form method="post">
+    {% csrf_token %}
+    {% for question in quiz.questions.all %}
+      <fieldset style="margin-bottom:1rem;">
+        <legend>{{ forloop.counter }}. {{ question.texte }}</legend>
+        {% for choice in question.choices.all %}
+        <div>
+          <label>
+            <input type="radio" name="question_{{ question.pk }}" value="{{ choice.pk }}">
+            {{ choice.texte }}
+          </label>
+        </div>
+        {% endfor %}
+      </fieldset>
+    {% endfor %}
+    <button type="submit" class="btn" data-tippy-content="Soumettre le quiz">
+      <i data-feather="check-circle"></i> Soumettre
+    </button>
+  </form>
+{% endblock %}

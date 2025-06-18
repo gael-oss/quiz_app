@@ -1,0 +1,65 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}Quiz App{% endblock %}</title>
+
+  <!-- CSS principal -->
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+  {% block extra_head %}{% endblock %}
+</head>
+
+<body>
+  <!-- Barre de navigation (fixe en haut) -->
+  <header role="banner">
+    {% include 'partials/nav.html' %}
+  </header>
+
+  <!-- Contenu principal (centré sous la nav) -->
+  <main id="page" role="main">
+    {% block content %}{% endblock %}
+  </main>
+
+  <!-- Overlay de chargement global -->
+  <div id="spinner-overlay" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.3); z-index:9999;">
+    <div class="spinner" style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);">
+      <div style="width:40px; height:40px; border:4px solid #fff; border-top-color:transparent; border-radius:50%; animation:spin 1s linear infinite;"></div>
+    </div>
+  </div>
+
+  <!-- Librairies tierces -->
+  <script src="https://unpkg.com/@popperjs/core@2"></script>
+  <script src="https://unpkg.com/tippy.js@6"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      tippy('[data-tippy-content]', { delay: [100, 50], maxWidth: 200 });
+    });
+  </script>
+
+  <script src="https://unpkg.com/feather-icons"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => feather.replace());
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+  <script src="{% static 'js/main.js' %}"></script>
+
+  <!-- Animation CSS du spinner -->
+  <style>
+    @keyframes spin { to { transform: rotate(360deg); } }
+    /* Décale le contenu sous la barre fixe */
+    #page {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 80px;   /* hauteur approximative de la nav */
+    }
+  </style>
+
+  {% block extra_js %}{% endblock %}
+</body>
+</html>
